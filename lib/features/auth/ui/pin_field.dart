@@ -36,6 +36,19 @@ class _PinFieldState extends State<PinField> {
   }
 
   @override
+  void didUpdateWidget(covariant PinField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Flutter reuses this State when a screen swaps one PinField for another
+    // (e.g. "enter PIN" -> "confirm PIN"). Without this the listener stays on
+    // the OLD controller and the new field never reports completion.
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_onChanged);
+      widget.controller.addListener(_onChanged);
+      _lastText = widget.controller.text;
+    }
+  }
+
+  @override
   void dispose() {
     widget.controller.removeListener(_onChanged);
     _focus.dispose();
