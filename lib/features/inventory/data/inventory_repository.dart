@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/db/app_database.dart';
 import '../../../core/db/constants.dart';
+import '../../../core/db/daos/inventory_dao.dart';
 import '../../../core/db/db_providers.dart';
 import '../../../core/sync/outbox_writer.dart';
 import '../../auth/domain/auth_controller.dart';

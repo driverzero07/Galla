@@ -19,6 +19,7 @@ abstract final class GallaColors {
   static const dangerBg = Color(0xFFFFE6E0);
   static const dangerBorder = Color(0xFFF2B8AA);
 
+  static const warning = Color(0xFF9A4F00);
   static const warningBg = Color(0xFFFFF0D6);
   static const warningBorder = Color(0xFFD98A00);
 

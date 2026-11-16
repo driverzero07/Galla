@@ -10,7 +10,6 @@ import '../../features/auth/domain/auth_controller.dart';
 import '../../features/auth/domain/auth_state.dart';
 import '../db/app_database.dart';
 import '../db/db_providers.dart';
-import '../utils/clock.dart';
 import 'connectivity.dart';
 import 'outbox_writer.dart';
 import 'sync_mapping.dart';

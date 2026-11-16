@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/theme/colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/utils/money.dart';
 import '../../../core/widgets/empty_state.dart';

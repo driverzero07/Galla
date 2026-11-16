@@ -207,7 +207,7 @@ String? mapUnit(String raw) {
   if (t.isEmpty) return null;
   const kg = {'kg', 'kgs', 'kilo', 'kilos', 'kilogram', 'kilograms', 'k.g'};
   const pack = {'pack', 'packs', 'packet', 'packets', 'pkt', 'box', 'carton'};
-  const dozen = {'dozen', 'doz', 'darjan', 'darjan'};
+  const dozen = {'dozen', 'doz', 'darjan', 'darzan'};
   const piece = {'piece', 'pieces', 'pc', 'pcs', 'dana', 'each', 'unit', 'nag'};
   if (kg.contains(t)) return ItemUnit.kg;
   if (pack.contains(t)) return ItemUnit.pack;
