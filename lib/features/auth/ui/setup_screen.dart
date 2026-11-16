@@ -271,6 +271,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           Center(child: Text(l10n.setupPinTitle, style: GallaText.label)),
           const SizedBox(height: 12),
           PinField(
+            key: const ValueKey('setup-pin'),
             controller: _pin,
             autofocus: true,
             onCompleted: _pinEntered,
@@ -281,6 +282,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           Center(child: Text(l10n.setupPinConfirm, style: GallaText.label)),
           const SizedBox(height: 12),
           PinField(
+            key: const ValueKey('setup-pin-confirm'),
             controller: _pinConfirm,
             autofocus: true,
             onCompleted: _pinConfirmed,

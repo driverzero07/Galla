@@ -77,4 +77,26 @@ void main() {
     await tester.pump();
     expect(completed, ['1234']);
   });
+
+  testWidgets(
+      'PinField still completes after its controller is swapped '
+      '(setup: enter PIN -> confirm PIN)', (tester) async {
+    final first = TextEditingController();
+    final second = TextEditingController();
+    final completed = <String>[];
+
+    // Same widget type in the same spot, only the controller changes: Flutter
+    // reuses the State, which is what broke the confirm-PIN step.
+    await tester.pumpWidget(
+        _wrap(PinField(controller: first, onCompleted: completed.add)));
+    await tester.enterText(find.byType(TextField), '1234');
+    await tester.pump();
+    expect(completed, ['1234']);
+
+    await tester.pumpWidget(
+        _wrap(PinField(controller: second, onCompleted: completed.add)));
+    await tester.enterText(find.byType(TextField), '1234');
+    await tester.pump();
+    expect(completed, ['1234', '1234']);
+  });
 }
