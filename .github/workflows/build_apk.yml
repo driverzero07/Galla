@@ -12,6 +12,8 @@ jobs:
   apk:
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -47,6 +49,20 @@ jobs:
           name: galla-test-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
           if-no-files-found: error
+
+      # One pre-release per branch (replaced on every run), so the APK can be
+      # downloaded straight from the Releases page, also on a phone.
+      - name: Publish APK to GitHub Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="apk-${GITHUB_REF_NAME//\//-}"
+          cp build/app/outputs/flutter-apk/app-debug.apk galla-debug.apk
+          gh release delete "$TAG" --cleanup-tag -y || true
+          gh release create "$TAG" galla-debug.apk --prerelease \
+            --target "$GITHUB_SHA" \
+            --title "Galla test APK ($GITHUB_REF_NAME)" \
+            --notes "Debug build of commit $GITHUB_SHA. Login: any phone number, OTP 123456."
 
       - name: Keep the logs (errors show here)
         if: always()
