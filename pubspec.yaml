@@ -34,7 +34,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   timezone: ^0.10.0
   file_picker: ^8.1.6
-  spreadsheet_decoder: ^2.3.1
+  spreadsheet_decoder: ^2.3.0
   path: ^1.9.0
   sentry_flutter: ^8.12.0
 
