@@ -1,0 +1,897 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2026-11-13",
+  "appName": "Galla",
+  "tagline": "Copy se tez, hisaab aasaan",
+  "phoneNumber": "Phone number",
+  "pinLabel": "4 number ka PIN",
+  "worksOffline": "Net na ho tab bhi app chalegi",
+  "openShop": "Dukan kholo",
+  "wrongPinOrPhone": "Phone number ya PIN ghalat hai",
+  "invalidPhone": "Sahi phone number likho",
+  "setupSendOtp": "OTP bhejo",
+  "setupOtpLabel": "OTP code",
+  "setupOtpSent": "Code {phone} par bheja gaya hai",
+  "@setupOtpSent": {
+    "description": "Shown after the OTP is sent",
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "setupOtpVerify": "Code check karo",
+  "setupWrongOtp": "Code ghalat hai, dobara likho",
+  "setupSendFailed": "Code nahi bheja ja saka. Net check karo.",
+  "setupShopNameLabel": "Dukan ka naam",
+  "setupShopNameHint": "Jaise: Ali General Store",
+  "setupShopNameRequired": "Dukan ka naam likho",
+  "setupNext": "Aage",
+  "setupPinTitle": "4 number ka PIN banao",
+  "setupPinConfirm": "PIN dobara likho",
+  "setupPinMismatch": "PIN match nahi hua, dobara likho",
+  "setupFirstTimeNote": "Phone number sirf pehli baar verify hoga",
+  "setupFailed": "Dukan nahi ban saki, dobara koshish karo",
+  "navKhata": "Khata",
+  "navBill": "Bill",
+  "navPurchase": "Purchase",
+  "homeGreeting": "Salam!",
+  "homeTodaySales": "Aj Ki Bikri",
+  "homeCash": "Cash : {amount}",
+  "@homeCash": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUdhaar": "Udhaar: {amount}",
+  "@homeUdhaar": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTodayProfit": "Aj Ka Munafa",
+  "homeLena": "Lena",
+  "homeDena": "Dena",
+  "homeCustomerCount": "{count} Customer",
+  "@homeCustomerCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeSupplierCount": "{count} Supplier",
+  "@homeSupplierCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeLowStockTitle": "Khatam Hona wala saman",
+  "homeLeftCount": "{count} Bacha",
+  "@homeLeftCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeMore": "...",
+  "billNewTitle": "Naya Bill",
+  "billNaqadCustomer": "Naqad customer",
+  "billSearchHint": "Saman ka naam likho",
+  "billSeeAll": "Sab dekho",
+  "billDiscount": "Discount",
+  "billCash": "Nakad",
+  "billUdhaar": "Udhaar",
+  "billMake": "Bill banao",
+  "billDoneTitle": "Bill ban gaya",
+  "billDonePaidCash": "Nakad · {customer}",
+  "@billDonePaidCash": {
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "billDoneStockAuto": "Stock khud kam ho gaya",
+  "billShare": "Share",
+  "billPrint": "Print",
+  "billNewAgain": "Naya Bill",
+  "billGoHome": "Home par jao",
+  "khataTitle": "Khata",
+  "khataAddCustomer": "+ Customer",
+  "khataSearchHint": "Customer ka naam likho",
+  "khataLenaTotal": "Lena (total udhaar)",
+  "khataLastSeen": "Aakhri: {when}",
+  "@khataLastSeen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "khataDetailTitle": "Customer ka khata",
+  "khataBalance": "Baqaya",
+  "khataReceived": "Paisay mile",
+  "khataAddUdhaar": "Udhaar likho",
+  "khataFullHistory": "Poori history",
+  "khataBillNo": "Bill #{no}",
+  "@khataBillNo": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "khataCashReceived": "Nakad wasool",
+  "khataAdvance": "Advance",
+  "purchaseNewTitle": "Naya Purchase",
+  "purchaseInvoicePhoto": "Invoice ki photo lo (saboot)",
+  "purchaseSupplier": "Supplier",
+  "purchaseItems": "Saman",
+  "purchaseCostLine": "Kharid Rs {cost} x {qty} {unit}",
+  "@purchaseCostLine": {
+    "placeholders": {
+      "cost": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseAddItem": "+ Saman jodo (scan ya naam)",
+  "purchaseTotal": "Kul",
+  "purchasePaidNow": "Abhi diye",
+  "purchaseSupplierBalance": "Supplier ka baqaya",
+  "purchaseSave": "Purchase save karo",
+  "supplierTitle": "Supplier ka khata",
+  "supplierLabel": "Supplier · {phone}",
+  "@supplierLabel": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierDena": "Dena (humein dena hai)",
+  "supplierPaid": "Paisay diye",
+  "supplierNewPurchase": "Naya Purchase",
+  "supplierPurchaseNo": "Purchase #{no}",
+  "@supplierPurchaseNo": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierCashPaid": "Nakad ada kiya",
+  "inventoryTitle": "Saman",
+  "inventoryAdd": "+ Saman",
+  "inventorySearchHint": "Saman ka naam likho",
+  "inventoryFilterAll": "Sab",
+  "inventoryFilterLow": "Khatam hone wala ({count})",
+  "@inventoryFilterLow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventorySellCostLine": "Bechna Rs {sell} · Kharid Rs {cost}",
+  "@inventorySellCostLine": {
+    "placeholders": {
+      "sell": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      }
+    }
+  },
+  "inventoryLowBadge": "KAM HAI",
+  "itemNewTitle": "Naya Saman",
+  "itemPhoto": "Photo lo",
+  "itemBarcodeScan": "Barcode scan",
+  "itemCostRate": "Kharid rate",
+  "itemSellRate": "Bechne ka rate",
+  "itemStockNow": "Abhi kitna hai",
+  "itemLowStockLevel": "Kitna bache to batao",
+  "unitKg": "Kg",
+  "unitPack": "Pack",
+  "unitDozen": "Dozen",
+  "unitPiece": "Piece",
+  "itemNoDeleteNote": "Delete nahi hoga, sirf chhupa sakte hain",
+  "save": "Save karo",
+  "menuTitle": "Menu",
+  "menuCustomer": "Customer",
+  "menuSupplier": "Supplier",
+  "menuInventory": "Inventory (Saman)",
+  "menuLowBadge": "{count} kam",
+  "@menuLowBadge": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuMigration": "Purani copy se data lao",
+  "menuSettings": "Settings",
+  "menuLanguage": "Zubaan",
+  "menuLanguageValue": "Roman Urdu",
+  "menuSyncStatus": "Sync ka haal",
+  "menuChangePin": "PIN badlo",
+  "migrationTitle": "Purani copy se data",
+  "migrationStep": "Step {step} / {total}: {title}",
+  "@migrationStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "migrationStepConfirm": "Check karke confirm karo",
+  "migrationPage": "Copy ka page {page}",
+  "@migrationPage": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationFound": "{count} naam mile. Neeche check karo.",
+  "@migrationFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationName": "Naam",
+  "migrationUncertain": "Pakka nahi, check karo",
+  "migrationManual": "Haath se naam + baqaya likho",
+  "migrationConfirmAll": "Sab theek hai, jama karo",
+  "syncAllSaved": "Sab save hai",
+  "syncOffline": "Net nahi, data save ho raha hai",
+  "syncPending": "{count} changes bheje jane baqi",
+  "@syncPending": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "placeholderComingSoon": "Yeh screen agle part mein banegi",
+  "emptyFirstDay": "Pehla saman add karo",
+  "back": "Wapas",
+  "notifications": "Alerts",
+  "more": "Aur",
+  "itemEditTitle": "Saman badlo",
+  "itemNameHint": "Saman ka naam",
+  "itemNameRequired": "Saman ka naam likho",
+  "itemBarcodeHint": "Barcode",
+  "itemInvalidNumber": "Sahi raqam likho",
+  "itemHide": "Chhupao",
+  "itemUnhide": "Wapas dikhao",
+  "itemHiddenTag": "Chhupa hua",
+  "itemDuplicateBarcode": "Yeh barcode pehle se hai. Wohi saman khol diya.",
+  "itemPhotoFailed": "Photo nahi li ja saki",
+  "itemSaveFailed": "Save nahi hua, dobara koshish karo",
+  "itemStockNowFixed": "Abhi stock: {qty} {unit}",
+  "@itemStockNowFixed": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "itemFixStock": "Stock theek karo",
+  "stockFixNewCount": "Naya count",
+  "stockFixReason": "Wajah (kyun badla?)",
+  "stockFixReasonRequired": "Wajah likho",
+  "inventoryShowHidden": "Chhupe hue dikhao",
+  "inventoryEmpty": "Pehla saman add karo",
+  "inventoryNoMatch": "Is naam ka saman nahi mila",
+  "scanTitle": "Barcode scan karo",
+  "scanHint": "Barcode ko camera ke saamne rakho",
+  "cancel": "Rehne do",
+  "customersTitle": "Customer",
+  "suppliersTitle": "Supplier",
+  "supplierAdd": "+ Supplier",
+  "customerNewTitle": "Naya customer",
+  "customerEditTitle": "Customer badlo",
+  "supplierNewTitle": "Naya supplier",
+  "supplierEditTitle": "Supplier badlo",
+  "partyNameLabel": "Naam",
+  "partyNameRequired": "Naam likho",
+  "partyPhoneLabel": "Phone number (zaroori nahi)",
+  "partyOpeningCustomer": "Pehle ka udhaar (agar ho)",
+  "partyOpeningSupplier": "Pehle ka dena (agar ho)",
+  "partyHide": "Chhupao",
+  "partyUnhide": "Wapas dikhao",
+  "partyShowHidden": "Chhupe hue dikhao",
+  "customersEmpty": "Pehla customer add karo",
+  "suppliersEmpty": "Pehla supplier add karo",
+  "partyNoMatch": "Koi nahi mila",
+  "partyAdvance": "Advance",
+  "partySaveFailed": "Save nahi hua, dobara koshish karo",
+  "ok": "Theek hai",
+  "billPickCustomerTitle": "Customer chuno",
+  "billNewCustomer": "+ Naya customer",
+  "billScan": "Scan",
+  "billQuickAll": "Sab dekho",
+  "billAllItemsTitle": "Sab saman",
+  "billEmptyCart": "Saman chuno ya scan karo",
+  "billLineDetail": "Rs {price} x {qty} {unit}",
+  "@billLineDetail": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "billPriceChanged": "Is bill ka rate badla",
+  "billDiscountTitle": "Discount",
+  "billDiscountAmount": "Discount (Rs)",
+  "billRoundOff": "Round off",
+  "billRoundTo": "Rs {step} tak",
+  "@billRoundTo": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "billDiscountApply": "Lagao",
+  "billDiscountClear": "Hatao",
+  "billDiscountMax": "Discount bill se zyada nahi ho sakta",
+  "billPaidNow": "Abhi kitne diye",
+  "billKhataRemaining": "Khata mein: {amount}",
+  "@billKhataRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "billNeedCustomer": "Udhaar ke liye customer chuno",
+  "stockLowTitle": "Stock kam hai",
+  "stockLowQuestion": "Stock kam hai, phir bhi bechna hai?",
+  "stockLowLine": "{name}: {have} hai, {need} chahiye",
+  "@stockLowLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "have": {
+        "type": "String"
+      },
+      "need": {
+        "type": "String"
+      }
+    }
+  },
+  "stockLowYes": "Haan, bechna hai",
+  "stockLowNo": "Nahi",
+  "billSaveFailed": "Bill save nahi hua, dobara koshish karo",
+  "billClearTitle": "Bill khali karein?",
+  "billClearYes": "Haan, khali karo",
+  "qtyDialogTitle": "Kitna?",
+  "priceDialogTitle": "Is bill ka rate (Rs)",
+  "billScanAdded": "{name} jud gaya",
+  "@billScanAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billScanUnknown": "Yeh barcode nahi mila",
+  "billScanDone": "Ho gaya",
+  "billScanCount": "{count} cheezein bill mein",
+  "@billScanCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "billDoneCash": "Nakad",
+  "billDoneUdhaar": "Udhaar · {customer}",
+  "@billDoneUdhaar": {
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "billDonePartial": "Aadha udhaar · {customer} · baqaya {amount}",
+  "@billDonePartial": {
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "receiptBill": "Bill",
+  "receiptCustomer": "Customer",
+  "receiptSubtotal": "Jama",
+  "receiptPaid": "Diye",
+  "receiptBalance": "Baqaya",
+  "receiptPartial": "Aadha udhaar",
+  "receiptCancelled": "BILL CANCEL",
+  "receiptThanks": "Shukriya!",
+  "billsTodayTitle": "Aj ki bikri",
+  "billsTodayTotal": "Kul bikri",
+  "billsEmpty": "Aj abhi koi bill nahi bana",
+  "billCancelledTag": "Cancel",
+  "billDetailTitle": "Bill #{no}",
+  "@billDetailTitle": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "billReturn": "Saman wapas",
+  "billCancel": "Bill cancel karo",
+  "billCancelTitle": "Bill cancel karein?",
+  "billCancelBody": "Stock aur khata wapas ho jayega. Yeh dobara nahi ho sakta.",
+  "billCancelYes": "Haan, cancel karo",
+  "billCancelledDone": "Bill cancel ho gaya",
+  "billActionFailed": "Nahi ho saka, dobara koshish karo",
+  "billAlreadyReturned": "Wapas: {qty}",
+  "@billAlreadyReturned": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "returnTitle": "Saman wapas",
+  "returnPick": "Kitna wapas aaya?",
+  "returnMax": "Zyada se zyada {qty}",
+  "@returnMax": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "returnConfirm": "Wapas lo",
+  "returnValue": "Wapas ki qeemat",
+  "returnFromKhata": "Khata se kam: {amount}",
+  "@returnFromKhata": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "returnCashBack": "Nakad wapas: {amount}",
+  "@returnCashBack": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "returnDone": "Saman wapas ho gaya",
+  "returnNothing": "Kitna wapas aaya woh chuno",
+  "whenToday": "Aaj",
+  "whenYesterday": "Kal",
+  "whenDays": "{n} din pehle",
+  "@whenDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "whenWeek": "1 hafta pehle",
+  "whenWeeks": "{n} hafte pehle",
+  "@whenWeeks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "whenMonths": "{n} mahine pehle",
+  "@whenMonths": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "khataNoActivity": "Abhi koi hisab nahi",
+  "khataOwingCount": "{count} Customer",
+  "@khataOwingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "khataSortHighest": "Sab se zyada",
+  "khataSortRecent": "Naye pehle",
+  "khataEmptyHistory": "Abhi koi hisab nahi likha",
+  "histOpening": "Pehle ka baqaya",
+  "histManualUdhaar": "Udhaar",
+  "histReturn": "Saman wapas, Bill #{no}",
+  "@histReturn": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "histCancel": "Bill #{no} cancel",
+  "@histCancel": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "histAdjustment": "Theek kiya",
+  "histPayment": "Paisay mile",
+  "entryAmount": "Kitne paisay?",
+  "entryFull": "Poora baqaya",
+  "entryNote": "Note (zaroori nahi)",
+  "entryDate": "Tareekh",
+  "entrySave": "Save karo",
+  "entryAmountInvalid": "Sahi raqam likho",
+  "entryFailed": "Save nahi hua, dobara koshish karo",
+  "receivedTitle": "Paisay mile",
+  "udhaarTitle": "Udhaar likho",
+  "supplierPayTitle": "Paisay diye",
+  "receivedDone": "{amount} mil gaye",
+  "@receivedDone": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "udhaarDone": "{amount} udhaar likh diya",
+  "@udhaarDone": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierPaidDone": "{amount} de diye",
+  "@supplierPaidDone": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "khataCall": "Call",
+  "khataWhatsApp": "WhatsApp",
+  "khataEditParty": "Badlo",
+  "khataShare": "Statement bhejo",
+  "khataShareText": "WhatsApp text",
+  "khataSharePdf": "PDF",
+  "launchFailed": "Yeh khul nahi saka",
+  "supplierAdvance": "Advance (humne zyada diye)",
+  "statementCustomer": "Khata statement",
+  "statementSupplier": "Supplier statement",
+  "statementDate": "Tareekh",
+  "statementDetail": "Tafseel",
+  "statementAmount": "Raqam",
+  "statementBalance": "Baqaya",
+  "statementMore": "Purani {n} entries nahi dikhayi",
+  "@statementMore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "statementThanks": "Shukriya",
+  "purchaseSaved": "Purchase save ho gaya",
+  "purchaseSaveFailed": "Purchase save nahi hua, dobara koshish karo",
+  "purchasePickSupplier": "Supplier chuno",
+  "purchaseNewSupplier": "+ Naya supplier",
+  "purchaseHistory": "Purchase history",
+  "purchaseHistoryEmpty": "Abhi koi purchase nahi",
+  "purchaseNeedSupplier": "Pehle supplier chuno",
+  "purchaseNeedItems": "Saman jodo",
+  "purchaseChangePhoto": "Photo lag gayi (badalne ke liye dabao)",
+  "purchaseDetailTitle": "Purchase #{no}",
+  "@purchaseDetailTitle": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseDetailTitleNoNo": "Purchase",
+  "purchaseSaboot": "Saboot (invoice photo)",
+  "purchaseNoPhoto": "Is purchase ki photo nahi",
+  "purchaseQtyTitle": "Kitna aya?",
+  "purchaseCostTitle": "Kharid ka rate",
+  "purchaseAddItemTitle": "Saman chuno",
+  "purchaseScan": "Scan",
+  "purchaseBarcodeUnknown": "Yeh barcode kisi saman ka nahi",
+  "purchaseUnpaidOnly": "Is purchase ka baqaya: {amount}",
+  "@purchaseUnpaidOnly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseClear": "Saaf karo",
+  "purchaseCostChanged": "Kharid ka rate naya ho jayega",
+  "purchasePaidShort": "Diye: {amount}",
+  "@purchasePaidShort": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseTotalShort": "Kul: {amount}",
+  "@purchaseTotalShort": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLeftQty": "{qty} Bacha",
+  "@homeLeftQty": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoItems": "Abhi koi saman nahi. Saman add karo, phir bill banana shuru karo.",
+  "homeAddFirstItem": "Pehla saman add karo",
+  "homeStockOk": "Sab saman theek hai",
+  "alertsTitle": "Alerts",
+  "alertsEmpty": "Koi alert nahi. Sab theek hai.",
+  "alertLowStock": "{count} saman khatam hone wala hai",
+  "@alertLowStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "alertLowStockOpen": "Poori list dekho",
+  "alertSyncOffline": "Net nahi. {count} changes phone mein save hain, net aane par bheje jayenge.",
+  "@alertSyncOffline": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notifLowTitle": "Saman khatam hone wala hai",
+  "notifLowBody": "Kuch saman kam reh gaya hai. Aj hi mangwa lo.",
+  "notifChannelName": "Saman ke alerts",
+  "notifChannelDesc": "Roz subah 9 baje, agar koi saman kam ho",
+  "migrationStepMethod": "Tareeqa chuno",
+  "migrationStepMapping": "Columns milao",
+  "migrationStepQuick": "Naam aur baqaya likho",
+  "migrationStepDone": "Ho gaya",
+  "migrationKindQuestion": "Kis ka data lana hai?",
+  "migrationKindCustomers": "Customer",
+  "migrationKindSuppliers": "Supplier",
+  "migrationKindItems": "Saman",
+  "migrationMethodQuick": "Haath se likho",
+  "migrationMethodQuickHint": "Copy dekh kar naam aur baqaya type karo",
+  "migrationMethodFile": "CSV / Excel file",
+  "migrationMethodFileHint": "Phone se file chuno (.csv, .xlsx)",
+  "migrationMethodPhoto": "Copy ki photo",
+  "migrationMethodPhotoHint": "Photo se naam aur baqaya parhe jayenge",
+  "migrationHistoryTitle": "Pehle ke imports",
+  "migrationHistoryLine": "{kind}: {count} entries, {date}",
+  "@migrationHistoryLine": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "migrationUndo": "Wapas karo",
+  "migrationUndone": "Wapas ho chuka",
+  "migrationUndoTitle": "Import wapas karein?",
+  "migrationUndoBody": "Is import ke naam ya saman chhupa diye jayenge aur baqaya pehle jaisa ho jayega.",
+  "migrationUndoDone": "Import wapas ho gaya",
+  "migrationUndoBlocked": "{count} entries par baad mein kaam ho chuka hai, is liye import wapas nahi ho sakta",
+  "@migrationUndoBlocked": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationQuickHint": "Naam likho, phir baqaya. Agli line ke liye keyboard ka tick dabao.",
+  "migrationAmount": "Baqaya",
+  "migrationQuickCount": "{count} naam, kul {total}",
+  "@migrationQuickCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "migrationNext": "Aage chalo",
+  "migrationFileName": "File: {name}",
+  "@migrationFileName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "migrationHasHeader": "Pehli line mein column ke naam hain",
+  "migrationMapHint": "Har cheez ke liye sahi column chuno",
+  "migrationNotInFile": "File mein nahi",
+  "migrationColumn": "Column {n}",
+  "@migrationColumn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationFieldPhone": "Phone",
+  "migrationFieldUnit": "Unit",
+  "migrationFieldCost": "Kharid ka rate",
+  "migrationFieldPrice": "Bechne ka rate",
+  "migrationFieldStock": "Stock",
+  "migrationFieldLow": "Kam stock level",
+  "migrationFieldBarcode": "Barcode",
+  "migrationPreview": "Pehli lines",
+  "migrationNameColumnNeeded": "Naam wala column zaroori hai",
+  "migrationPickFile": "File chuno",
+  "migrationFoundItems": "{count} saman mile. Neeche check karo.",
+  "@migrationFoundItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationSourceQuick": "Haath se likha hua",
+  "migrationDuplicate": "Pehle se hai",
+  "migrationImportAnyway": "Phir bhi jama karo",
+  "migrationSkipDuplicate": "Chhod do",
+  "migrationWillImport": "Jama hoga",
+  "migrationRowError": "Is line mein galti hai, theek karo",
+  "migrationRemoveRow": "Hata do",
+  "migrationNegativeHint": "Minus ka matlab advance hai",
+  "migrationFixLines": "{count} lines theek karo",
+  "@migrationFixLines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationUncertainTitle": "Kuch lines pakki nahi",
+  "migrationUncertainBody": "{count} lines abhi pakki nahi hain. Phir bhi jama karein?",
+  "@migrationUncertainBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationCheckAgain": "Dobara dekho",
+  "migrationGoAhead": "Jama karo",
+  "migrationDoneCount": "{count} entries jama ho gayi",
+  "@migrationDoneCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "migrationDoneTotal": "Kul baqaya: {amount}",
+  "@migrationDoneTotal": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "migrationDoneButton": "Theek hai",
+  "migrationErrUnsupported": "Ye file nahi khul sakti. .csv ya .xlsx chuno (.xls ko pehle .xlsx mein save karo)",
+  "migrationErrEmpty": "File mein koi data nahi mila",
+  "migrationErrBroken": "File parhi nahi ja saki",
+  "migrationErrOcrOffline": "Net nahi hai. Photo parhne ke liye net chahiye",
+  "migrationErrOcrFailed": "Photo parh nahi saka, dobara koshish karo",
+  "migrationErrOcrNothing": "Photo mein naam nahi mile",
+  "migrationErrSave": "Save nahi ho saka, dobara koshish karo",
+  "migrationErrBarcode": "Ye barcode pehle se kisi aur saman par hai",
+  "migrationErrNothing": "Kam az kam ek naam likho",
+  "setupRestoring": "Dukan ka data wapas aa raha hai...",
+  "setupRestoreFailed": "Data wapas nahi aa saka. Net check karke dobara koshish karo.",
+  "setupRestored": "Aap ki dukan ka data wapas aa gaya. Naya PIN banao.",
+  "settingsTitle": "Sync aur backup",
+  "menuSyncBackup": "Sync aur backup",
+  "syncNowButton": "Sync abhi",
+  "syncRunning": "Sync ho raha hai...",
+  "syncDone": "Sab data server par save ho gaya",
+  "syncNever": "Abhi tak sync nahi hua",
+  "syncLast": "Aakhri sync: {time}",
+  "@syncLast": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "syncStuck": "{count} changes server ne qabool nahi kiye",
+  "@syncStuck": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "syncErrNotReady": "Server set nahi hai ya login nahi hua",
+  "syncErrOffline": "Net nahi hai. Data phone par safe hai.",
+  "syncErrRejected": "Server ne kuch changes qabool nahi kiye",
+  "syncErrServer": "Server abhi jawab nahi de raha, thori der baad try hoga",
+  "backupTitle": "Backup",
+  "backupHint": "Apna sara data CSV files mein nikalo (Excel mein khulti hain) aur WhatsApp ya Drive par bhejo.",
+  "backupButton": "CSV backup nikalo",
+  "backupFailed": "Backup nahi ban saka",
+  "aboutVersion": "Galla {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyPolicy": "Privacy policy"
+}

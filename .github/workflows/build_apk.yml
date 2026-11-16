@@ -1,0 +1,54 @@
+# Builds a test APK in the cloud, so you do not need Flutter on your computer.
+# Push this project to a GitHub repository, open the Actions tab, run
+# "Build test APK" (it also runs on every push), then download the APK from
+# the run's "Artifacts" section.
+name: Build test APK
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      # Creates the Android folder, patches it, generates code, then runs the
+      # analyzer and tests. Their result is saved to a text file but does not
+      # stop the APK, so you can still try the app.
+      - name: Setup and checks
+        run: |
+          set +e
+          bash tool/setup.sh 2>&1 | tee setup_log.txt
+          echo "setup exit code: ${PIPESTATUS[0]}" | tee -a setup_log.txt
+          exit 0
+
+      - name: Build debug APK (fake login code 123456, works offline)
+        run: flutter build apk --debug 2>&1 | tee build_log.txt
+
+      - name: Keep the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: galla-test-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+
+      - name: Keep the logs (errors show here)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: |
+            setup_log.txt
+            build_log.txt
