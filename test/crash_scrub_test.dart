@@ -5,7 +5,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 void main() {
   test('crash events carry no customer data', () {
     final event = SentryEvent(
-      message: const SentryMessage('Akram owes Rs 3400'),
+      message: SentryMessage('Akram owes Rs 3400'),
       user: SentryUser(id: 'u1', email: 'a@b.pk', username: 'Akram'),
       breadcrumbs: [Breadcrumb(message: 'tapped Akram Sahib')],
       extra: {'customer': 'Akram'},

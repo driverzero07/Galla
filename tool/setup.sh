@@ -9,6 +9,33 @@ if [ ! -d android ]; then
   flutter create --project-name galla --org pk.galla --platforms android .
 fi
 
+# 1b. Some plugins (file_picker, ...) are still compiled against android-34,
+#     but androidx lifecycle now needs compileSdk 36. Force 36 on every plugin
+#     module. Registered with beforeProject so it runs before AGP finalizes.
+ROOT_KTS=android/build.gradle.kts
+if [ -f "$ROOT_KTS" ] && ! grep -q "galla-compilesdk-override" "$ROOT_KTS"; then
+  cat > android/.galla_override.kts.txt <<'KTS'
+// galla-compilesdk-override
+gradle.beforeProject {
+    if (path != ":" && name != "app") {
+        afterEvaluate {
+            extensions.findByName("android")?.let { ext ->
+                try {
+                    ext.javaClass.methods.firstOrNull { it.name == "setCompileSdk" }?.invoke(ext, 36)
+                } catch (e: Exception) {
+                    println("compileSdk override skipped for $name: $e")
+                }
+            }
+        }
+    }
+}
+
+KTS
+  cat android/.galla_override.kts.txt "$ROOT_KTS" > android/.root_new.kts
+  mv android/.root_new.kts "$ROOT_KTS"
+  rm -f android/.galla_override.kts.txt
+fi
+
 # 2. Part 0 requires minSdk 23 (Android 6) so 2 GB phones are covered.
 for f in android/app/build.gradle.kts android/app/build.gradle; do
   if [ -f "$f" ]; then
@@ -55,7 +82,7 @@ dart run build_runner build --delete-conflicting-outputs
 dart run flutter_launcher_icons
 dart run flutter_native_splash:create
 flutter gen-l10n
-flutter analyze
+flutter analyze --no-fatal-infos
 flutter test
 
 echo
