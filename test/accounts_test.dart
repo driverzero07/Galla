@@ -42,7 +42,7 @@ void main() {
 
   tearDown(() => db.close());
 
-  PurchaseError? purchaseError(Object e) =>
+  PurchaseError? purchaseError(Object? e) =>
       e is PurchaseException ? e.error : null;
 
   test('a new shop starts with exactly the cash it was given', () async {

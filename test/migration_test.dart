@@ -7,6 +7,16 @@ void main() {
       'data', () async {
     // A phone that installed Part 1: stock_movements has no `note` column.
     final db = AppDatabase(NativeDatabase.memory(setup: (raw) {
+      // Every Part 1 phone already has its shop row.
+      raw.execute('''
+        CREATE TABLE shops (
+          id TEXT NOT NULL, shop_id TEXT NOT NULL,
+          created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL,
+          name TEXT NOT NULL, owner_name TEXT NULL, phone TEXT NOT NULL,
+          PRIMARY KEY (id))
+      ''');
+      raw.execute("INSERT INTO shops VALUES "
+          "('s1','s1',1,1,'Old Store',NULL,'+923001234567')");
       raw.execute('''
         CREATE TABLE stock_movements (
           id TEXT NOT NULL, shop_id TEXT NOT NULL,
@@ -74,6 +84,14 @@ void main() {
         .get();
     expect(ib.map((r) => r.read<String>('name')),
         containsAll(['kind', 'method', 'row_count', 'entity_ids', 'undone_at']));
+
+    final sc = await db
+        .customSelect("SELECT name FROM pragma_table_info('shops')")
+        .get();
+    expect(sc.map((r) => r.read<String>('name')), contains('opening_cash'));
+    final shop = await db.select(db.shops).getSingle();
+    expect(shop.name, 'Old Store');
+    expect(shop.openingCash, 0);
 
     final v = await db.customSelect('PRAGMA user_version').getSingle();
     expect(v.read<int>('user_version'), AppDatabase.currentSchemaVersion);
