@@ -7,6 +7,19 @@ import '../data/sales_repository.dart';
 import 'bill_math.dart';
 import 'cart.dart';
 
+/// Result of asking the cart to take more of an item.
+class StockCheck {
+  const StockCheck.ok()
+      : ok = true,
+        available = 0;
+  const StockCheck.short(this.available) : ok = false;
+
+  final bool ok;
+
+  /// Stock on hand (thousandths) when [ok] is false.
+  final int available;
+}
+
 /// Holds the bill being built. Every change is written to a local draft so a
 /// killed app or dead battery loses nothing; the draft is cleared when the
 /// bill is saved or discarded.
@@ -64,6 +77,45 @@ class BillController extends Notifier<BillState> {
         ),
       ]));
     }
+  }
+
+  /// Stock on hand for [itemId] (thousandths), read fresh from the database.
+  Future<int> _stock(String itemId) =>
+      ref.read(salesRepositoryProvider).stockOf(itemId);
+
+  int _inCart(String itemId) =>
+      _s.lines.where((l) => l.itemId == itemId).firstOrNull?.qty ?? 0;
+
+  /// Like [addItem], but nothing is added beyond the stock on hand: an item
+  /// with no stock cannot enter the bill at all.
+  Future<StockCheck> addItemChecked(Item item, {int qty = 1000}) async {
+    final available = await _stock(item.id);
+    if (_inCart(item.id) + qty > available) {
+      return StockCheck.short(available);
+    }
+    addItem(item, qty: qty);
+    return const StockCheck.ok();
+  }
+
+  /// Plus on a cart row, refused when it would go past the stock.
+  Future<StockCheck> incrementChecked(String itemId) async {
+    final available = await _stock(itemId);
+    if (_inCart(itemId) + 1000 > available) {
+      return StockCheck.short(available);
+    }
+    increment(itemId);
+    return const StockCheck.ok();
+  }
+
+  /// Number pad entry, refused (and the row left unchanged) when [qty] is
+  /// more than the stock on hand. Zero or less removes the row as before.
+  Future<StockCheck> setQtyChecked(String itemId, int qty) async {
+    if (qty > 0) {
+      final available = await _stock(itemId);
+      if (qty > available) return StockCheck.short(available);
+    }
+    setQty(itemId, qty);
+    return const StockCheck.ok();
   }
 
   /// Plus: one more unit.

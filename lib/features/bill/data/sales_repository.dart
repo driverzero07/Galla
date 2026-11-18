@@ -64,6 +64,10 @@ enum BillError {
 
   /// Naqad customer can never carry udhaar (Part 0 rule 5).
   creditNeedsCustomer,
+
+  /// A line asks for more than the stock on hand. Nothing is sold that is
+  /// not in the inventory.
+  insufficientStock,
 }
 
 class BillException implements Exception {
@@ -82,7 +86,8 @@ class SaleActionException implements Exception {
   String toString() => 'SaleActionException($error)';
 }
 
-/// An item that would go below zero stock. Never blocks a sale (rule 8).
+/// An item whose quantity on the bill is more than the stock on hand. Such a
+/// bill cannot be saved.
 class StockShortage {
   const StockShortage(this.itemId, this.name, this.needed, this.available);
   final String itemId;
@@ -111,6 +116,10 @@ class SalesRepository {
 
   static const billPrefixKey = 'bill_prefix';
   static const billSeqKey = 'bill_seq';
+
+  /// Stock on hand for one item (thousandths); 0 when nothing was ever added.
+  Future<int> stockOf(String itemId) async =>
+      (await _db.salesDao.stocksOf([itemId]))[itemId] ?? 0;
 
   /// Items whose quantity on this bill is more than the stock on hand.
   Future<List<StockShortage>> shortages(List<BillLineInput> lines) async {
@@ -154,6 +163,16 @@ class SalesRepository {
         final item = await _db.inventoryDao.itemById(l.itemId);
         if (item == null) throw const BillException(BillError.unknownItem);
         items[l.itemId] = item;
+      }
+
+      // Nothing is sold that is not in the inventory: every line must be
+      // covered by the stock on hand, checked inside the same transaction.
+      final stocks =
+          await _db.salesDao.stocksOf(input.lines.map((l) => l.itemId));
+      for (final l in input.lines) {
+        if (l.qty > (stocks[l.itemId] ?? 0)) {
+          throw const BillException(BillError.insufficientStock);
+        }
       }
 
       final totals = computeTotals(

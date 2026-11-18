@@ -147,6 +147,11 @@ class _PurchaseScreenState extends ConsumerState<PurchaseScreen> {
       ref.read(purchaseControllerProvider.notifier).clear();
       messenger.showSnackBar(SnackBar(content: Text(l10n.purchaseSaved)));
       router.push('/purchases/${saved.purchaseId}');
+    } on PurchaseException catch (e) {
+      messenger.showSnackBar(SnackBar(
+          content: Text(e.error == PurchaseError.insufficientCash
+              ? l10n.cashNotEnough(formatPaisa(e.available))
+              : l10n.purchaseSaveFailed)));
     } catch (e) {
       if (kDebugMode) debugPrint('purchase save error: $e');
       messenger.showSnackBar(SnackBar(content: Text(l10n.purchaseSaveFailed)));

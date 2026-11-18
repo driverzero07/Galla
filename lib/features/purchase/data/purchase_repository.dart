@@ -9,6 +9,7 @@ import '../../../core/db/constants.dart';
 import '../../../core/db/daos/purchases_dao.dart';
 import '../../../core/db/db_providers.dart';
 import '../../../core/sync/outbox_writer.dart';
+import '../../accounts/data/accounts_repository.dart';
 import '../../auth/domain/auth_controller.dart';
 import '../../auth/domain/current_shop.dart';
 import '../../bill/domain/bill_math.dart';
@@ -53,11 +54,17 @@ enum PurchaseError {
   unknownSupplier,
   unknownItem,
   badPaid,
+
+  /// Paying the supplier more than the cash in hand.
+  insufficientCash,
 }
 
 class PurchaseException implements Exception {
-  const PurchaseException(this.error);
+  const PurchaseException(this.error, {this.available = 0});
   final PurchaseError error;
+
+  /// Cash in hand (paisa) when [error] is insufficientCash.
+  final int available;
   @override
   String toString() => 'PurchaseException($error)';
 }
@@ -97,6 +104,13 @@ class PurchaseRepository {
     return writeWithOutbox(_db, (outbox) async {
       if (await _db.khataDao.supplierById(input.supplierId) == null) {
         throw const PurchaseException(PurchaseError.unknownSupplier);
+      }
+      if (paid > 0) {
+        final cash = await AccountsRepository.cashInHandOf(_db, shopId);
+        if (paid > cash) {
+          throw PurchaseException(PurchaseError.insufficientCash,
+              available: cash < 0 ? 0 : cash);
+        }
       }
       final no = await _db.deviceStateDao.nextNumber(purchaseSeqKey, _random);
       final p = await _db.into(_db.purchases).insertReturning(

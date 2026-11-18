@@ -16,6 +16,11 @@ class Shops extends Table with BaseColumns {
   TextColumn get ownerName => text().nullable()();
   TextColumn get phone => text()();
 
+  /// Cash in the drawer on the day the shop started using Galla (paisa,
+  /// schema v6). Every cash movement after that is derived from bills,
+  /// payments and purchases, so cash in hand is never typed twice.
+  IntColumn get openingCash => integer().withDefault(const Constant(0))();
+
   @override
   Set<Column> get primaryKey => {id};
 }

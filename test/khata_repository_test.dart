@@ -22,7 +22,10 @@ void main() {
     now = DateTime(2026, 11, 14, 10);
     db = AppDatabase(NativeDatabase.memory());
     await ShopRepository(db).createShop(
-        shopId: 'shop1', shopName: 'Test Store', phone: '+923001234567');
+        shopId: 'shop1',
+        shopName: 'Test Store',
+        phone: '+923001234567',
+        openingCash: 100000000);
     khata = KhataRepository(db, () => 'shop1', () => now);
     customers = CustomerRepository(db, () => 'shop1', () => now);
     suppliers = SupplierRepository(db, () => 'shop1', () => now);

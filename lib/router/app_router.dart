@@ -9,6 +9,7 @@ import '../core/widgets/galla_logo.dart';
 import '../features/settings/ui/settings_screen.dart';
 import '../features/auth/domain/auth_controller.dart';
 import '../features/auth/domain/auth_state.dart';
+import '../features/accounts/ui/accounts_screen.dart';
 import '../features/auth/ui/login_screen.dart';
 import '../features/auth/ui/setup_screen.dart';
 import '../features/bill/ui/bill_detail_screen.dart';
@@ -55,6 +56,7 @@ abstract final class Routes {
   static const alerts = '/alerts';
   static const samanAdd = '/saman/add';
   static const menu = '/menu';
+  static const accounts = '/accounts';
   static const migration = '/migration';
   static const settings = '/settings';
   static const debugScreens = '/debug';
@@ -153,6 +155,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: Routes.suppliers, builder: (_, __) => const SuppliersScreen()),
       GoRoute(path: Routes.menu, builder: (_, __) => const MenuScreen()),
+      GoRoute(
+          path: Routes.accounts, builder: (_, __) => const AccountsScreen()),
       GoRoute(
           path: Routes.migration, builder: (_, __) => const MigrationScreen()),
       GoRoute(

@@ -27,6 +27,7 @@ class ShopRepository {
     required String shopName,
     required String phone,
     String? ownerName,
+    int openingCash = 0,
     DateTime? now,
   }) {
     final stamp = now ?? DateTime.now();
@@ -38,6 +39,7 @@ class ShopRepository {
               name: shopName,
               phone: phone,
               ownerName: Value(ownerName),
+              openingCash: Value(openingCash),
               createdAt: stamp,
               updatedAt: stamp,
             ),

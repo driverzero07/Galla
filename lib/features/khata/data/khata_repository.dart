@@ -10,13 +10,25 @@ import '../../../core/sync/outbox_writer.dart';
 import '../../auth/data/shop_repository.dart';
 import '../../auth/domain/auth_controller.dart';
 import '../../auth/domain/current_shop.dart';
+import '../../accounts/data/accounts_repository.dart';
 import '../domain/ledger_history.dart';
 
-enum LedgerEntryError { badAmount, unknownParty, systemCustomer }
+enum LedgerEntryError {
+  badAmount,
+  unknownParty,
+  systemCustomer,
+
+  /// Paying a supplier more than the cash in hand: the money would come
+  /// from nowhere.
+  insufficientCash,
+}
 
 class LedgerEntryException implements Exception {
-  const LedgerEntryException(this.error);
+  const LedgerEntryException(this.error, {this.available = 0});
   final LedgerEntryError error;
+
+  /// Cash in hand (paisa) when [error] is insufficientCash.
+  final int available;
   @override
   String toString() => 'LedgerEntryException($error)';
 }
@@ -112,6 +124,12 @@ class KhataRepository {
     final now = _now();
     final id = _uuid.v4();
     await writeWithOutbox(_db, (outbox) async {
+      // Money going out must exist: it comes out of the cash in hand.
+      final cash = await AccountsRepository.cashInHandOf(_db, shopId);
+      if (amount > cash) {
+        throw LedgerEntryException(LedgerEntryError.insufficientCash,
+            available: cash < 0 ? 0 : cash);
+      }
       final row = await _db.into(_db.supplierLedger).insertReturning(
             SupplierLedgerCompanion.insert(
               id: id,

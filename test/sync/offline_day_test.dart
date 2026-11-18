@@ -31,6 +31,7 @@ void main() {
         shopId: 'shop1',
         shopName: 'Ali General Store',
         phone: '+923001234567',
+        openingCash: 10000000,
         now: clock);
     final inv = InventoryRepository(db, () => 'shop1', now);
     final customers = CustomerRepository(db, () => 'shop1', now);

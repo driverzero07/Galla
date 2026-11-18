@@ -44,7 +44,7 @@ void main() {
       BillLineInput(itemId: id, qty: qty, unitPrice: price);
 
   group('saveBill', () {
-    test('cash sale: sale, lines, negative stock, no ledger', () async {
+    test('cash sale: sale, lines, stock goes down, no ledger', () async {
       final saved = await sales.saveBill(BillInput(lines: [
         line(cheeni, 2500, 18000),
         line(atta, 1000, 10000),
@@ -117,9 +117,43 @@ void main() {
       expect(again.costSnapshot, 16500);
     });
 
-    test('selling more than stock is allowed (negative stock)', () async {
-      await sales.saveBill(BillInput(lines: [line(atta, 15000, 10000)]));
-      expect(await stock(atta), -5000);
+    test('selling more than stock is refused and nothing is written',
+        () async {
+      await expectLater(
+          sales.saveBill(BillInput(lines: [line(atta, 15000, 10000)])),
+          throwsA(isA<BillException>()
+              .having((e) => e.error, 'error', BillError.insufficientStock)));
+      expect(await stock(atta), 10000);
+      expect(await db.select(db.sales).get(), isEmpty);
+    });
+
+    test('an item with no stock at all cannot be sold', () async {
+      final nothing = await inv.createItem(const ItemInput(
+          name: 'Namak',
+          unit: ItemUnit.kg,
+          costPrice: 5000,
+          salePrice: 6000));
+      expect(await sales.stockOf(nothing), 0);
+      await expectLater(
+          sales.saveBill(BillInput(lines: [line(nothing, 1000, 6000)])),
+          throwsA(isA<BillException>()
+              .having((e) => e.error, 'error', BillError.insufficientStock)));
+    });
+
+    test('selling exactly the stock on hand is fine', () async {
+      await sales.saveBill(BillInput(lines: [line(atta, 10000, 10000)]));
+      expect(await stock(atta), 0);
+    });
+
+    test('two lines: one short blocks the whole bill', () async {
+      await expectLater(
+          sales.saveBill(BillInput(lines: [
+            line(cheeni, 1000, 18000),
+            line(atta, 10001, 10000),
+          ])),
+          throwsA(isA<BillException>()
+              .having((e) => e.error, 'error', BillError.insufficientStock)));
+      expect(await stock(cheeni), 50000);
     });
 
     test('shortages reports items beyond stock', () async {

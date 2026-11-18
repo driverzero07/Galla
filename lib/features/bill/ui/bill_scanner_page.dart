@@ -8,6 +8,7 @@ import '../../../core/theme/colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/galla_buttons.dart';
 import '../../../core/widgets/galla_header.dart';
+import '../../../core/utils/money.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../auth/domain/current_shop.dart';
 import '../domain/bill_controller.dart';
@@ -70,12 +71,24 @@ class _BillScannerPageState extends ConsumerState<BillScannerPage> {
           _messageIsError = true;
         });
       } else {
-        ref.read(billProvider.notifier).addItem(item);
-        HapticFeedback.lightImpact();
-        setState(() {
-          _message = l10n.billScanAdded(item.name);
-          _messageIsError = false;
-        });
+        final r = await ref.read(billProvider.notifier).addItemChecked(item);
+        if (!mounted) return;
+        if (r.ok) {
+          HapticFeedback.lightImpact();
+          setState(() {
+            _message = l10n.billScanAdded(item.name);
+            _messageIsError = false;
+          });
+        } else {
+          HapticFeedback.heavyImpact();
+          setState(() {
+            _message = r.available <= 0
+                ? l10n.stockNoneBody(item.name)
+                : l10n.stockOnlyBody(
+                    item.name, formatQty(r.available));
+            _messageIsError = true;
+          });
+        }
       }
     } finally {
       _busy = false;

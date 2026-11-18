@@ -65,11 +65,13 @@ class AuthController extends Notifier<AuthState> {
     required String phone,
     required String shopName,
     required String pin,
+    int openingCash = 0,
   }) async {
     await ref.read(shopRepositoryProvider).createShop(
           shopId: shopId,
           shopName: shopName,
           phone: phone,
+          openingCash: openingCash,
         );
     await _store.write(SecureKeys.pinHash, _hasher.hash(pin));
     await _store.write(SecureKeys.phone, phone);

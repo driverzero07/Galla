@@ -7,13 +7,14 @@ import '../../../core/theme/tokens.dart';
 import '../../../core/utils/phone.dart';
 import '../../../core/widgets/galla_buttons.dart';
 import '../../../core/widgets/galla_logo.dart';
+import '../../../core/utils/money.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../data/otp_provider.dart';
 import '../data/restore_service.dart';
 import '../domain/auth_controller.dart';
 import 'pin_field.dart';
 
-enum _Step { phone, otp, shopName, pin, pinConfirm }
+enum _Step { phone, otp, shopName, openingCash, pin, pinConfirm }
 
 /// First-time setup: phone + OTP (once), shop name, then a 4-digit PIN.
 class SetupScreen extends ConsumerStatefulWidget {
@@ -28,6 +29,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   final _phone = TextEditingController();
   final _otp = TextEditingController();
   final _shop = TextEditingController();
+  final _cash = TextEditingController();
   final _pin = TextEditingController();
   final _pinConfirm = TextEditingController();
 
@@ -41,14 +43,14 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   @override
   void initState() {
     super.initState();
-    for (final c in [_phone, _otp, _shop, _pin, _pinConfirm]) {
+    for (final c in [_phone, _otp, _shop, _cash, _pin, _pinConfirm]) {
       c.addListener(() => setState(() {}));
     }
   }
 
   @override
   void dispose() {
-    for (final c in [_phone, _otp, _shop, _pin, _pinConfirm]) {
+    for (final c in [_phone, _otp, _shop, _cash, _pin, _pinConfirm]) {
       c.dispose();
     }
     super.dispose();
@@ -116,6 +118,25 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
     }
     setState(() {
       _error = null;
+      _step = _Step.openingCash;
+    });
+  }
+
+  /// Cash in the drawer today; blank means nothing yet.
+  int? get _openingCashPaisa {
+    final t = _cash.text.trim();
+    return t.isEmpty ? 0 : parseRupeesToPaisa(t);
+  }
+
+  void _openingCashDone() {
+    final l10n = AppLocalizations.of(context);
+    final v = _openingCashPaisa;
+    if (v == null || v < 0) {
+      setState(() => _error = l10n.setupCashInvalid);
+      return;
+    }
+    setState(() {
+      _error = null;
       _step = _Step.pin;
     });
   }
@@ -151,6 +172,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           phone: _phoneE164!,
           shopName: _shop.text.trim(),
           pin: pin,
+          openingCash: _openingCashPaisa ?? 0,
         );
       }
       // Router redirects to Home once the controller unlocks.
@@ -262,6 +284,21 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
             onChanged: (_) => setState(() => _error = null),
           ),
         ];
+      case _Step.openingCash:
+        return [
+          Text(l10n.setupCashLabel, style: GallaText.label),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _cash,
+            autofocus: true,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            style: GallaText.display.copyWith(fontSize: 20),
+            decoration: InputDecoration(prefixText: 'Rs ', hintText: '0'),
+            onChanged: (_) => setState(() => _error = null),
+          ),
+          const SizedBox(height: 8),
+          Text(l10n.setupCashHelp, style: GallaText.body),
+        ];
       case _Step.pin:
         return [
           if (_restored) ...[
@@ -315,6 +352,13 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
           GallaPrimaryButton(
             label: l10n.setupNext,
             onPressed: _busy ? null : _shopNameDone,
+          ),
+        ];
+      case _Step.openingCash:
+        return [
+          GallaPrimaryButton(
+            label: l10n.setupNext,
+            onPressed: _busy ? null : _openingCashDone,
           ),
         ];
       case _Step.pin:

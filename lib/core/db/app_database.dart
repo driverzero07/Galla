@@ -51,7 +51,7 @@ class AppDatabase extends _$AppDatabase {
   /// For tests: pass `NativeDatabase.memory()`.
   AppDatabase(super.executor);
 
-  static const currentSchemaVersion = 5;
+  static const currentSchemaVersion = 6;
 
   @override
   int get schemaVersion => currentSchemaVersion;
@@ -87,7 +87,11 @@ class AppDatabase extends _$AppDatabase {
             // Part 6: import batches.
             await m.createTable(importBatches);
           }
-          // Next: if (from < 6) { ... }
+          if (from < 6) {
+            // Accounts: cash in the drawer when the shop started.
+            await m.addColumn(shops, shops.openingCash);
+          }
+          // Next: if (from < 7) { ... }
         },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');

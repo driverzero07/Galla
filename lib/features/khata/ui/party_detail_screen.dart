@@ -219,6 +219,11 @@ class PartyDetailScreen extends ConsumerWidget {
           content: Text(isCustomer
               ? l10n.receivedDone(formatPaisa(r.amount))
               : l10n.supplierPaidDone(formatPaisa(r.amount)))));
+    } on LedgerEntryException catch (e) {
+      final text = e.error == LedgerEntryError.insufficientCash
+          ? l10n.cashNotEnough(formatPaisa(e.available))
+          : l10n.entryFailed;
+      messenger.showSnackBar(SnackBar(content: Text(text)));
     } catch (e) {
       if (kDebugMode) debugPrint('payment error: $e');
       messenger.showSnackBar(SnackBar(content: Text(l10n.entryFailed)));

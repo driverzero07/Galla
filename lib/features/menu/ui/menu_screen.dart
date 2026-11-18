@@ -69,6 +69,12 @@ class MenuScreen extends ConsumerWidget {
               ),
             ),
             _MenuRow(
+              icon: Icons.account_balance_wallet_outlined,
+              label: l10n.menuAccounts,
+              chevron: true,
+              onTap: () => context.push('/accounts'),
+            ),
+            _MenuRow(
               icon: Icons.person_outline,
               label: l10n.menuCustomer,
               trailing: customers == null ? null : _Count('$customers'),

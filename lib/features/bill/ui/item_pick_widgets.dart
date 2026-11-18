@@ -12,6 +12,7 @@ import '../../inventory/data/inventory_repository.dart';
 import '../../inventory/ui/item_thumb.dart';
 import '../../inventory/ui/saman_screen.dart' show unitLabel;
 import '../domain/bill_controller.dart';
+import 'stock_alert.dart';
 
 /// Tile in the quick-pick grid: tap once = one unit added to the bill.
 class QuickPickTile extends StatelessWidget {
@@ -210,9 +211,7 @@ class _AllItemsSheetState extends ConsumerState<_AllItemsSheet> {
                   itemBuilder: (context, i) => ItemPickRow(
                     entry: list[i],
                     inCart: qtyInCart[list[i].item.id] ?? 0,
-                    onTap: () => ref
-                        .read(billProvider.notifier)
-                        .addItem(list[i].item),
+                    onTap: () => _addChecked(context, ref, list[i].item),
                   ),
                 ),
                 orElse: () => const SizedBox.shrink(),
@@ -223,4 +222,11 @@ class _AllItemsSheetState extends ConsumerState<_AllItemsSheet> {
       ),
     );
   }
+}
+
+/// Adds one unit, or tells the shopkeeper why it cannot be added.
+Future<void> _addChecked(BuildContext context, WidgetRef ref, Item item) async {
+  final r = await ref.read(billProvider.notifier).addItemChecked(item);
+  if (r.ok || !context.mounted) return;
+  await showStockAlert(context, ref, item.name, item.unit, r.available);
 }

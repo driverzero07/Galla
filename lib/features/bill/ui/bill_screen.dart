@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/db/app_database.dart' show Item;
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/utils/money.dart';
@@ -23,6 +24,7 @@ import 'customer_picker_sheet.dart';
 import 'discount_sheet.dart';
 import 'item_pick_widgets.dart';
 import 'number_entry_dialog.dart';
+import 'stock_alert.dart';
 
 /// Naya Bill: 3 taps for the common case (open Bill, tap item, Bill banao).
 class BillScreen extends ConsumerStatefulWidget {
@@ -76,7 +78,25 @@ class _BillScreenState extends ConsumerState<BillScreen> {
         title: l10n.qtyDialogTitle,
         current: line.qty,
         unit: unitLabel(l10n, line.unit));
-    if (v != null) ref.read(billProvider.notifier).setQty(line.itemId, v);
+    if (v == null || !mounted) return;
+    final r = await ref.read(billProvider.notifier).setQtyChecked(line.itemId, v);
+    if (!mounted || r.ok) return;
+    await showStockAlert(context, ref, line.name, line.unit, r.available);
+  }
+
+  /// "+" on a cart row: one more unit, but never beyond the stock.
+  Future<void> _plus(CartLine line) async {
+    final r = await ref.read(billProvider.notifier).incrementChecked(line.itemId);
+    if (!mounted || r.ok) return;
+    await showStockAlert(context, ref, line.name, line.unit, r.available);
+  }
+
+  /// Adds one unit of [item] from a tap or search result. An item with no
+  /// stock cannot be added at all.
+  Future<void> _addItem(Item item) async {
+    final r = await ref.read(billProvider.notifier).addItemChecked(item);
+    if (!mounted || r.ok) return;
+    await showStockAlert(context, ref, item.name, item.unit, r.available);
   }
 
   Future<void> _editPrice(CartLine line) async {
@@ -134,15 +154,15 @@ class _BillScreenState extends ConsumerState<BillScreen> {
 
     setState(() => _saving = true);
     try {
-      // Rule 8: warn about negative stock, but never block the sale.
+      // Nothing is sold beyond the stock on hand. The cart already refuses
+      // such quantities; this catches stock that changed since (e.g. a
+      // second phone sold the same item).
       final shortages = await repo.shortages(input.lines);
       if (shortages.isNotEmpty) {
         if (!mounted) return;
-        final go = await _confirmLowStock(shortages);
-        if (go != true) {
-          if (mounted) setState(() => _saving = false);
-          return;
-        }
+        await _showShortages(shortages);
+        if (mounted) setState(() => _saving = false);
+        return;
       }
       final saved = await repo.saveBill(input);
       await ctrl.clear();
@@ -152,9 +172,11 @@ class _BillScreenState extends ConsumerState<BillScreen> {
       router.pushReplacement('/bill/done/${saved.saleId}');
     } on BillException catch (e) {
       if (kDebugMode) debugPrint('bill error: $e');
-      final text = e.error == BillError.creditNeedsCustomer
-          ? l10n.billNeedCustomer
-          : l10n.billSaveFailed;
+      final text = switch (e.error) {
+        BillError.creditNeedsCustomer => l10n.billNeedCustomer,
+        BillError.insufficientStock => l10n.stockNotEnoughSave,
+        _ => l10n.billSaveFailed,
+      };
       messenger.showSnackBar(SnackBar(content: Text(text)));
       if (mounted) setState(() => _saving = false);
     } catch (e) {
@@ -164,7 +186,8 @@ class _BillScreenState extends ConsumerState<BillScreen> {
     }
   }
 
-  Future<bool?> _confirmLowStock(List<StockShortage> shortages) {
+  /// Save-time safety net: lists every line that is more than the stock.
+  Future<void> _showShortages(List<StockShortage> shortages) {
     final l10n = AppLocalizations.of(context);
     final lines = ref.read(billProvider).lines;
     String unitFor(String id) {
@@ -172,12 +195,12 @@ class _BillScreenState extends ConsumerState<BillScreen> {
       return u.isEmpty ? '' : ' ${unitLabel(l10n, u)}';
     }
 
-    return showDialog<bool>(
+    return showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
         icon: const Icon(Icons.warning_amber_rounded,
-            color: GallaColors.udhaar, size: 36),
-        title: Text(l10n.stockLowQuestion, style: GallaText.heading),
+            color: GallaColors.danger, size: 36),
+        title: Text(l10n.stockNotEnoughTitle, style: GallaText.heading),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,12 +220,8 @@ class _BillScreenState extends ConsumerState<BillScreen> {
           ],
         ),
         actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(l10n.stockLowNo)),
           FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(l10n.stockLowYes)),
+              onPressed: () => Navigator.pop(ctx), child: Text(l10n.ok)),
         ],
       ),
     );
@@ -348,7 +367,7 @@ class _BillScreenState extends ConsumerState<BillScreen> {
             entry: e,
             inCart: qtyInCart[e.item.id] ?? 0,
             onTap: () {
-              ref.read(billProvider.notifier).addItem(e.item);
+              _addItem(e.item);
               // Back to the grid so the next item is one tap away.
               FocusScope.of(context).unfocus();
               setState(() => _query = '');
@@ -373,7 +392,7 @@ class _BillScreenState extends ConsumerState<BillScreen> {
         for (final item in picks)
           QuickPickTile(
             item: item,
-            onTap: () => ref.read(billProvider.notifier).addItem(item),
+            onTap: () => _addItem(item),
           ),
         SeeAllTile(
           label: l10n.billQuickAll,
@@ -454,7 +473,7 @@ class _BillScreenState extends ConsumerState<BillScreen> {
                 ),
                 _StepButton(
                   icon: Icons.add,
-                  onTap: () => ctrl.increment(line.itemId),
+                  onTap: () => _plus(line),
                 ),
               ],
             ),
